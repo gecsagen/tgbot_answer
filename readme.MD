@@ -1,58 +1,58 @@
-##  О проекте:  
-Проект реализует телеграм бота с админкой на Django. Бот может отвечать на вопросы пользователя. Администратор бота может заполнить БД любым количеством вопросов и ответов, бот сравнивает вопрос пользователя с вопросами из БД и выбирает наиболее релевантный ответ. Бот сравнивает не слепо, а по процентам похожести и т.о выдает наиболее релевантный ответ.  
+##  About the project:  
+The project implements a telegram bot with an admin panel on Django. The bot can answer the user's questions. The bot administrator can ask DB questions regarding low and answers, the bot compares users' questions with questions from the DB and selects the most relevant answer. The bot does not compare blindly, but by percentage of probability, and thus gives the most relevant answer.
 
-## Стек:
-1. Бот: [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot "python-telegram-bot")
-2. Админка: [Django](https://www.djangoproject.com/ "Django")
+## Stack:
+1. Bot: [python-telegram-bot](https://github.com/python-telegram-bot/python-telegram-bot "python-telegram-bot")
+2. Web-admin: [Django](https://www.djangoproject.com/ "Django")
 
-## Локальный запуск:  
-1. Клонируем репозиторий:  
+## Local launch:  
+1. Clone the repository:  
 `git clone https://github.com/gecsagen/tgbot_answer`  
-2. Создаем виртуальное окружение:  
+2. Creating a virtual environment:  
 ```
 bot_answer
 pyhon -m venv .venv
 ```
-3. Активируем окружение:  
+3. Activate the environment:  
 `source .venv/bin/activate`  
-4. Устанавливаем зависимости:  
+4. Installing dependencies:  
 `pip install -r requirements.txt`  
-5. Создайте файл **settings.json** в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем **settings.examle.json**:  
+5. Create a **settings.json** file at the root of the project and fill in the required settings. The project has an example file named **settings.examle.json**:  
 ```
-"token": "  Токен телеграм бота"
-"about_as": "Информация о компании"
-"contact_phones": "Список телефонов"
-"contact_emails": "Список емайлов"
-"address_list": "Список адресов"
-"how_to_use": "Информация как пользоваться ботом
-"debug": "Режим отладки для Django
-"secret_key": "Секретный ключ проекта Django"  
+"token": "Telegram bot token"
+"about_as": "Company Information"
+"contact_phones": "List of phones"
+"contact_emails": "List of emails"
+"address_list": "Address list"
+"how_to_use": "Information on how to use the bot
+"debug": "Debug mode for Django
+"secret_key": "Django project secret key"
 
 ```
-Следуйте образцу из **settings.examle.json**  
+Follow the pattern from **settings.examle.json**  
 
-7. Выполняем миграции:  
+7. Performing migrations:  
 `python manage.py migrate`  
-6. Создаем пользователя админки:  
+6. Create an admin user:  
 `python manage.py createsuperuser`  
-8. Запускаем админку:  
+8. We launch the admin panel:  
 `python manage.py runserver`  
-или через **gunicorn**:  
+or through **gunicorn**:  
 `gunicorn --bind 0.0.0.0:8000 config.wsgi`  
-9. Переходим в админку по **127.0.0.1:8000** и заполняем вопросами ответами админку.  
-10. Запускаем бота в отдельном терминале:  
+9. Go to the admin panel at **127.0.0.1:8000** and fill in the admin panel with questions and answers.  
+10.Run the bot in a separate terminal:  
 `python manage.py bot`  
-## Деплой:  
-1. Клонируем репозиторий:  
+## Deploy:  
+1. Clone the repository:  
 `git clone https://github.com/gecsagen/tgbot_answer`  
-2. Запускаем скрипт **setup.sh**  
+2. Run the script **setup.sh**   
 `./setup.sh`  
-3. Создайте файл **settings.json** в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем **settings.examle.json**  
-4. Создаем пользователя админки:  
+3. Create a **settings.json** file at the root of the project and fill in the required settings. The project has an example file named **settings.examle.json**  
+4. Create an admin user:  
 `python manage.py createsuperuser`  
-5. Создаем файл **systemd**:  
+5.Create file **systemd**:  
 `sudo nano /etc/systemd/system/gunicorn.socket`  
-Со следующим содержанием:  
+With the following content:  
 ```
 [Unit]
 Description=gunicorn socket
@@ -63,12 +63,12 @@ ListenStream=/run/gunicorn.sock
 [Install]
 WantedBy=sockets.target
 ```
-5. Cоздаем служебный файл **systemd** для **gunicorn** с помощью следующей команды:  
+5. Create a service file **systemd** for **gunicorn** with the following command:
 
 `sudo nano /etc/systemd/system/gunicorn.service`  
 
-Примечание:  
-предполагается что вы склонируете проект в директорию **root**, поэтому все пути в конфигах настроенны таким образом. Если вы склоируете проект в другую директорию, то измените пути в конфигах на валидные.
+**Note:**  
+❗it is assumed that you clone the project to the **root** directory, so all paths in the configs are configured in this way. If you clone the project to another directory, then change the paths in the configs to valid ones❗
 ```  
 [Unit]
 Description=gunicorn daemon
@@ -87,14 +87,14 @@ ExecStart=/root/tgbot_answer/.venv/bin/gunicorn \
 [Install]
 WantedBy=multi-user.target
 ```
-6. Запускаем сервис **systemd gunicorn** из предыдущего шага:  
+6. Start the **systemd gunicorn** service from the previous step:
 ```
 sudo systemctl start gunicorn.socket
 sudo systemctl enable gunicorn.socket
 ```  
-7. Создайте конфиг **nginx**:  
+7. Create **nginx** config:   
 `sudo nano /etc/nginx/sites-available/tgbot_answer`  
-Со следующим содержимым:  
+With the following content:  
 ```
 server {
     listen 80;
@@ -112,22 +112,22 @@ server {
     }
 }
 ```
-🔴❗Обязательно поменяйте ip server_name **93.202.86.15** на ip вашего сервера❗🔴    
-8. Измените пользователя **nginx**: 
+❗Be sure to change ip server_name **93.202.86.15** to the ip of your server❗ 
+8. Change user **nginx**:   
 `sudo nano /etc/nginx/nginx.conf`  
-Измените пользователя в первой строчке на **root**:  
+Change the user in the first line to **root**:    
 `user root;`  
-9. Свяжите файл с каталогом поддержки сайтов:  
+9. Associate the file with the site support directory:  
 `sudo ln -s /etc/nginx/sites-available/tgbot_answer /etc/nginx/sites-enabled`  
-10. Перезапустите nginx, разрешите порт в фаеволе:  
+10. Restart nginx, allow the port in the firewall:  
 ```
 systemctl restart nginx
 sudo ufw allow 'Nginx Full'
 sudo systemctl status nginx
 ``` 
-11. Создайте сервис запуска бота:  
+11. Create a bot start service:  
 `sudo nano /etc/systemd/system/bot.service`  
-Со следующим содержимым:  
+With the following content:    
 ```
 [Unit]
 Description=bot daemon
@@ -143,15 +143,14 @@ ExecStart=/root/tgbot_answer/bot.sh
 [Install]
 WantedBy=multi-user.target
 ```  
-12. Запустите сервис бота:  
+12. Start the bot service:  
 ```
 systemctl start bot.service
 systemctl enable bot.service
 systemctl status bot
 ```
 
-13. Теперь перейдите по **http://domain_name_or_server_IP/admin** и вы попадете в админку бота. Необходимо ввести логин и пароль. 
-
+13. Now go to http://domain_name_or_server_ip/admin and you will be taken to the bot's admin panel. You must enter your username and password. Then you can fill the database with questions and answers.
 
 
 
