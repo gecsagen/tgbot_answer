@@ -125,7 +125,32 @@ systemctl restart nginx
 sudo ufw allow 'Nginx Full'
 sudo systemctl status nginx
 ``` 
-11. Теперь перейдите по http://domain_name_or_server_IP/admin и вы попадете в админку бота. Необходимо ввести логин и пароль. 
+11. Создайте сервис запуска бота:  
+`sudo nano /etc/systemd/system/bot.service`  
+Со следующим содержимым:  
+```
+[Unit]
+Description=bot daemon
+Requires=gunicorn.service
+After=gunicorn.service
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/root/tgbot_answer
+ExecStart=/root/tgbot_answer/bot.sh
+
+[Install]
+WantedBy=multi-user.target
+```  
+12. Запустите сервис бота:  
+```
+systemctl start bot.service
+systemctl enable bot.service
+systemctl status bot
+```
+
+13. Теперь перейдите по http://domain_name_or_server_IP/admin и вы попадете в админку бота. Необходимо ввести логин и пароль. 
 
 
 
