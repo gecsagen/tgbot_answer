@@ -17,7 +17,7 @@ pyhon -m venv .venv
 `source .venv/bin/activate`  
 4. Устанавливаем зависимости:  
 `pip install -r requirements.txt`  
-5. Создайте файл settings.json в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем settings.examle.json:  
+5. Создайте файл **settings.json** в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем **settings.examle.json**:  
 ```
 "token": "  Токен телеграм бота"
 "about_as": "Информация о компании"
@@ -29,7 +29,7 @@ pyhon -m venv .venv
 "secret_key": "Секретный ключ проекта Django"  
 
 ```
-Следуйте образцу из settings.examle.json  
+Следуйте образцу из **settings.examle.json**  
 
 7. Выполняем миграции:  
 `python manage.py migrate`  
@@ -37,20 +37,20 @@ pyhon -m venv .venv
 `python manage.py createsuperuser`  
 8. Запускаем админку:  
 `python manage.py runserver`  
-или через gunicorn:  
+или через **gunicorn**:  
 `gunicorn --bind 0.0.0.0:8000 config.wsgi`  
-9. Переходим в админку по 127.0.0.1:8000 и заполняем вопросами ответами админку.  
+9. Переходим в админку по **127.0.0.1:8000** и заполняем вопросами ответами админку.  
 10. Запускаем бота в отдельном терминале:  
 `python manage.py bot`  
 ## Деплой:  
 1. Клонируем репозиторий:  
 `git clone https://github.com/gecsagen/tgbot_answer`  
-2. Запускаем скрипт setup.sh  
+2. Запускаем скрипт **setup.sh**  
 `./setup.sh`  
-3. Создайте файл settings.json в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем settings.examle.json  
+3. Создайте файл **settings.json** в корне проекта и заполните необходимые настройки. В проекте есть пример файла с именем **settings.examle.json**  
 4. Создаем пользователя админки:  
 `python manage.py createsuperuser`  
-5. Создаем файл systemd:  
+5. Создаем файл **systemd**:  
 `sudo nano /etc/systemd/system/gunicorn.socket`  
 Со следующим содержанием:  
 ```
@@ -63,12 +63,12 @@ ListenStream=/run/gunicorn.sock
 [Install]
 WantedBy=sockets.target
 ```
-5. Cоздаем служебный файл systemd для gunicorn с помощью следующей команды:  
+5. Cоздаем служебный файл **systemd** для **gunicorn** с помощью следующей команды:  
 
 `sudo nano /etc/systemd/system/gunicorn.service`  
 
 Примечание:  
-предполагается что вы склонируете проект в директорию root, поэтому все пути в конфигах настроенны таким образом. Если вы склоируете проект в другую директорию, то измените пути в конфигах на валидные.
+предполагается что вы склонируете проект в директорию **root**, поэтому все пути в конфигах настроенны таким образом. Если вы склоируете проект в другую директорию, то измените пути в конфигах на валидные.
 ```  
 [Unit]
 Description=gunicorn daemon
@@ -87,12 +87,12 @@ ExecStart=/root/tgbot_answer/.venv/bin/gunicorn \
 [Install]
 WantedBy=multi-user.target
 ```
-6. Запускаем сервис systemd gunicorn из предыдущего шага:  
+6. Запускаем сервис **systemd gunicorn** из предыдущего шага:  
 ```
 sudo systemctl start gunicorn.socket
 sudo systemctl enable gunicorn.socket
 ```  
-7. Создайте конфиг nginx:  
+7. Создайте конфиг **nginx**:  
 `sudo nano /etc/nginx/sites-available/tgbot_answer`  
 Со следующим содержимым:  
 ```
@@ -112,10 +112,10 @@ server {
     }
 }
 ```
-* Обязательно поменяйте ip server_name 93.202.86.15 на ip вашего сервера! 
-8. Измените пользователя nginx: 
+* Обязательно поменяйте ip server_name **93.202.86.15** на ip вашего сервера! 
+8. Измените пользователя **nginx**: 
 `sudo nano /etc/nginx/nginx.conf`  
-Измените пользователя в первой строчке на root:  
+Измените пользователя в первой строчке на **root**:  
 `user root;`  
 9. Свяжите файл с каталогом поддержки сайтов:  
 `sudo ln -s /etc/nginx/sites-available/tgbot_answer /etc/nginx/sites-enabled`  
@@ -150,7 +150,7 @@ systemctl enable bot.service
 systemctl status bot
 ```
 
-13. Теперь перейдите по http://domain_name_or_server_IP/admin и вы попадете в админку бота. Необходимо ввести логин и пароль. 
+13. Теперь перейдите по **http://domain_name_or_server_IP/admin** и вы попадете в админку бота. Необходимо ввести логин и пароль. 
 
 
 
