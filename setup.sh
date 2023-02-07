@@ -1,0 +1,10 @@
+apt-get install python3-venv
+python3 -m venv .venv
+activate() {
+    . .venv/bin/activate
+    echo "installing requirements to virtual environment"
+    pip install -r requirements.txt
+}
+activate
+python3 manage.py migrate
+python3 manage.py collectstatic
