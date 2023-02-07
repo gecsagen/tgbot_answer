@@ -1,4 +1,5 @@
-apt-get install python3-venv
+apt update
+apt install -y python3.10-venv
 python3 -m venv .venv
 activate() {
     . .venv/bin/activate
