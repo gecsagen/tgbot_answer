@@ -10,7 +10,7 @@ The project implements a telegram bot with an admin panel on Django. The bot can
 `git clone https://github.com/gecsagen/tgbot_answer`  
 2. Creating a virtual environment:  
 ```
-bot_answer
+cd bot_answer
 pyhon -m venv .venv
 ```
 3. Activate the environment:  
