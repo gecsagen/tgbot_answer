@@ -112,7 +112,7 @@ server {
     }
 }
 ```
-❗Be sure to change ip server_name **93.202.86.15** to the ip of your server❗ 
+❗Be sure to change ip server_name **93.202.86.15** to the ip of your server❗  
 8. Change user **nginx**:   
 `sudo nano /etc/nginx/nginx.conf`  
 Change the user in the first line to **root**:    
